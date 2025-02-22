@@ -4,10 +4,15 @@ library(tidyverse)      # For data manipulation and ggplot2 for visualization
 library(lubridate)      # For working with dates
 library(DataExplorer)   # For automated EDA reports
 library(corrplot)       # For correlation matrix plots
-
+library(patchwork)
+library(ggplot2)
+library(gridExtra)
+library(knitr)
+library(plotly)
 # Read in the CSV files
-maurienne <- read_csv("maurienne_valley_20_years_daily_data.csv")
-susa <- read_csv("susa_valley_20_years_weather.csv")
+maurienne <- read_csv("maurienne_valley_weather_1980_today.csv")
+susa <- read_csv("susa_valley_weather_1980_today.csv")
+
 
 # Quick look at the data structure
 print(glimpse(maurienne))
@@ -56,13 +61,10 @@ susa$weather_code <- as.factor(susa$weather_code)
 
 glimpse(susa)
 glimpse(maurienne)                       
-library(patchwork)
+
 
 plots <- list()
 
-# Load required packages
-library(ggplot2)
-library(gridExtra)
 
 # Initialize an empty list to store plots
 plots <- list()
@@ -99,7 +101,8 @@ if ("total_precip" %in% names(susa)) {
 
 # Display all plots in a grid if there are any
 if (length(plots) > 0) {
-  print(do.call(grid.arrange, c(plots, ncol = 2)))  # Explicitly print the arranged plots
+  combined_plot <- wrap_plots(plots, ncol = 2)
+  print(combined_plot)
 }
 
 
@@ -168,3 +171,10 @@ if (ncol(susa_numeric) > 1) {
   corrplot(cor_matrix_susa, method = "color", tl.cex = 0.8)
 }
 
+pairs(susa[, sapply(susa, is.numeric)])
+pairs(maurienne[, sapply(maurienne, is.numeric)])
+
+
+
+p <- ggplot(susa, aes(x = date, y = mean_temp)) + geom_line() + labs(title = "Susa Valley Temperature Over 20 Years", x = "Date", y = "Mean Temperature (°C)") + theme_minimal()
+ggplotly(p)

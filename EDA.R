@@ -176,5 +176,8 @@ pairs(maurienne[, sapply(maurienne, is.numeric)])
 
 
 
-p <- ggplot(susa, aes(x = date, y = mean_temp)) + geom_line() + labs(title = "Susa Valley Temperature Over 20 Years", x = "Date", y = "Mean Temperature (°C)") + theme_minimal()
-ggplotly(p)
+#s <- ggplot(susa, aes(x = date, y = mean_temp)) + geom_line() + labs(title = "Susa Valley Temperature Over 20 Years", x = "Date", y = "Mean Temperature (°C)") + theme_minimal()
+#ggplotly(s)
+
+#m <- ggplot(maurienne, aes(x = date, y = mean_temp)) + geom_line() + labs(title = "Maurienne Valley Temperature Over 20 Years", x = "Date", y = "Mean Temperature (°C)") + theme_minimal()
+#ggplotly(m)

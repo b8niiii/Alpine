@@ -318,14 +318,15 @@ summary(f)
 # LET'S TRY BY USING STL DECOMPOSITION
 # Again assuming monthly data with frequency = 12
 # Example: creating a time series object from daily data
-# temp_data: your vector of daily temperature observations
+# temp_data: your vector of daily temperature observations, ts() creates a timeseries object
 temp_ts_susa <- ts(susa$mean_temp, start = c(1980, 1), frequency = 365)
 # Decompose the time series using STL
 # Apply STL decomposition on the time series
-stl_decomp_susa <- stl(temp_ts, s.window = "periodic", robust = TRUE)
+stl_decomp_susa <- stl(temp_ts_susa, s.window = "periodic", robust = TRUE)
 
 # Plot the decomposition components
-plot(stl_decomp)
+plot(stl_decomp_susa, main = "STL Decomposition of Temperature Time Series in Susa Valley", 
+     col = c("blue"))
 
 
 temp_ts_maurienne <- ts(maurienne$mean_temp, start = c(1980, 1), frequency = 365)
